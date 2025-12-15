@@ -15,7 +15,7 @@ A client-side web app that uses **AI (via OpenRouter)** to generate personalized
 
 ## 🚀 Live Demo
 
-Visit: **[Your GitHub Pages URL]**
+Visit: **[lumikitten.github.io/aispotifyplaylistcreator](https://lumikitten.github.io/aispotifyplaylistcreator/)**
 
 ## 📋 Setup
 
