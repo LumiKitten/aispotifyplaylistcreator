@@ -64,7 +64,3 @@ This is a **client-side only** application. Your API keys are:
 | `index.html` | Main layout, modals, loading overlay              |
 | `styles.css` | Dark theme, glassmorphism, animations             |
 | `app.js`     | OAuth, AI integration, encryption, playlist logic |
-
-## 📄 License
-
-MIT License - feel free to use and modify!
