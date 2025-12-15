@@ -22,7 +22,7 @@ Visit: **[lumikitten.github.io/aispotifyplaylistcreator](https://lumikitten.gith
 ### 1. Get API Keys
 
 - **Spotify Client ID**: Create an app at [developer.spotify.com/dashboard](https://developer.spotify.com/dashboard)
-  - Add your redirect URI (e.g., `https://yourusername.github.io/spotifyplaylistcreator/`)
+  - Add redirect URI (e.g., `https://username.github.io/spotifyplaylistcreator/`)
 - **OpenRouter API Key**: Get one at [openrouter.ai/keys](https://openrouter.ai/keys)
 
 ### 2. Configure the App
