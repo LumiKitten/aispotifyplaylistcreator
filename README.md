@@ -65,10 +65,6 @@ This is a **client-side only** application. Your API keys are:
 | `styles.css` | Dark theme, glassmorphism, animations             |
 | `app.js`     | OAuth, AI integration, encryption, playlist logic |
 
-## 🤝 Contributing
-
-Feel free to open issues or submit PRs!
-
 ## 📄 License
 
 MIT License - feel free to use and modify!
