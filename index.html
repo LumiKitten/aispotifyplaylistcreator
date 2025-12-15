@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Playlist Creator | Spotify</title>
+    <meta
+      name="description"
+      content="Create personalized Spotify playlists using AI. Generate playlists from prompts or remix existing ones."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+          <path
+            d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"
+          />
+        </svg>
+        <span>AI Playlist Creator</span>
+      </div>
+      <div class="header-actions">
+        <button id="settingsBtn" class="btn btn-ghost" title="Settings">
+          <svg
+            viewBox="0 0 24 24"
+            width="20"
+            height="20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="3"></circle>
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+            ></path>
+          </svg>
+        </button>
+        <button id="authBtn" class="btn btn-primary">
+          <span id="authText">Connect Spotify</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Left Panel: AI Chat -->
+      <section class="panel ai-panel">
+        <div class="panel-header">
+          <div class="panel-header-left">
+            <h2>Create with AI</h2>
+            <button id="newChatBtn" class="btn btn-ghost btn-sm" title="New Chat">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              New
+            </button>
+          </div>
+          <div class="mode-toggle">
+            <button class="mode-btn active" data-mode="generate">From Scratch</button>
+            <button class="mode-btn" data-mode="remix">Remix Playlist</button>
+          </div>
+        </div>
+
+        <div class="chat-container" id="chatContainer">
+          <div class="welcome-message">
+            <div class="welcome-icon">✨</div>
+            <h3>Welcome to AI Playlist Creator</h3>
+            <p>
+              Describe the playlist you want to create, or paste a Spotify
+              playlist URL to remix it.
+            </p>
+            <div class="suggestions">
+              <button
+                class="suggestion-chip"
+                data-prompt="5 upbeat songs for a morning workout"
+              >
+                🏃 Morning workout
+              </button>
+              <button
+                class="suggestion-chip"
+                data-prompt="Chill lo-fi beats for studying and focus"
+              >
+                📚 Study session
+              </button>
+              <button
+                class="suggestion-chip"
+                data-prompt="80s synthwave classics for coding"
+              >
+                💻 Coding vibes
+              </button>
+              <button
+                class="suggestion-chip"
+                data-prompt="Relaxing acoustic songs for a cozy evening"
+              >
+                🌙 Evening chill
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-container">
+          <div class="remix-input" id="remixInput" style="display: none">
+            <input
+              type="text"
+              id="playlistUrl"
+              placeholder="Paste Spotify playlist URL..."
+              class="text-input"
+            />
+          </div>
+          <div class="prompt-input" id="promptInput">
+            <textarea
+              id="promptText"
+              placeholder="Describe your perfect playlist..."
+              rows="2"
+            ></textarea>
+            <button
+              id="generateBtn"
+              class="btn btn-primary btn-generate"
+              disabled
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polygon
+                  points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+                ></polygon>
+              </svg>
+              Generate
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Panel: Playlist Builder -->
+      <section class="panel playlist-panel">
+        <div class="panel-header">
+          <div class="playlist-info">
+            <div class="playlist-name-wrapper">
+              <label class="playlist-name-label">Playlist Name</label>
+              <div class="playlist-name-field">
+                <input
+                  type="text"
+                  id="playlistName"
+                  class="playlist-name-input"
+                  placeholder="My AI Playlist"
+                  value="My AI Playlist"
+                />
+                <svg class="edit-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+              </div>
+            </div>
+            <span class="track-count" id="trackCount">0 tracks</span>
+          </div>
+          <button id="savePlaylistBtn" class="btn btn-primary" disabled>
+            <svg
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"
+              ></path>
+              <polyline points="17 21 17 13 7 13 7 21"></polyline>
+              <polyline points="7 3 7 8 15 8"></polyline>
+            </svg>
+            Save to Spotify
+          </button>
+        </div>
+
+        <div class="track-list" id="trackList">
+          <div class="empty-state">
+            <div class="empty-icon">🎵</div>
+            <p>No tracks yet</p>
+            <span>Generate tracks using AI or search below</span>
+          </div>
+        </div>
+
+        <div class="search-container">
+          <div class="search-input-wrapper">
+            <svg
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="M21 21l-4.35-4.35"></path>
+            </svg>
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search for tracks..."
+              class="search-input"
+            />
+          </div>
+          <div class="search-results" id="searchResults"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="settingsModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Settings</h2>
+          <button class="modal-close" id="closeSettings">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="setting-group">
+            <label for="spotifyClientId">Spotify Client ID</label>
+            <input
+              type="text"
+              id="spotifyClientId"
+              placeholder="Enter your Spotify Client ID"
+              class="text-input"
+            />
+            <p class="setting-help">
+              Get yours at
+              <a href="https://developer.spotify.com/dashboard" target="_blank"
+                >developer.spotify.com</a
+              >
+            </p>
+          </div>
+          <div class="setting-group">
+            <label for="openrouterKey">OpenRouter API Key</label>
+            <input
+              type="password"
+              id="openrouterKey"
+              placeholder="Enter your OpenRouter API key"
+              class="text-input"
+            />
+            <p class="setting-help">
+              Get yours at
+              <a href="https://openrouter.ai/keys" target="_blank"
+                >openrouter.ai</a
+              >
+            </p>
+          </div>
+          <div class="setting-group">
+            <label for="aiModel">AI Model</label>
+            <select id="aiModel" class="text-input">
+              <optgroup label="🆓 Free Models">
+                <option value="deepseek/deepseek-chat-v3-0324:free">DeepSeek Chat V3</option>
+                <option value="meta-llama/llama-3.3-70b-instruct:free">Meta Llama 3.3 70B</option>
+                <option value="qwen/qwen-3-235b-a22b:free">Qwen 3 235B</option>
+                <option value="google/gemini-flash-2.0:free">Gemini Flash 2.0</option>
+                <option value="deepseek/deepseek-r1:free">DeepSeek R1</option>
+                <option value="meta-llama/llama-4-maverick:free">Meta Llama 4 Maverick</option>
+                <option value="google/gemma-3-27b-it:free">Gemma 3 27B</option>
+                <option value="deepseek/deepseek-r1t-chimera:free">DeepSeek R1T Chimera</option>
+                <option value="openai/gpt-oss-20b:free">GPT OSS 20B</option>
+                <option value="amazon/nova-2-lite:free">Nova 2 Lite</option>
+              </optgroup>
+              <optgroup label="💰 Best Value">
+                <option value="deepseek/deepseek-chat">DeepSeek Chat V3 ($0.20/M)</option>
+                <option value="openai/gpt-4o-mini">GPT-4o Mini ($0.15/M)</option>
+                <option value="google/gemini-flash-1.5">Gemini Flash 1.5 ($0.08/M)</option>
+                <option value="anthropic/claude-3.5-haiku">Claude Haiku 3.5 ($0.80/M)</option>
+                <option value="mistralai/mistral-nemo">Mistral Nemo ($0.02/M)</option>
+                <option value="meta-llama/llama-3.1-70b-instruct">Llama 3.1 70B ($0.35/M)</option>
+                <option value="qwen/qwen-2.5-72b-instruct">Qwen 2.5 72B ($0.35/M)</option>
+                <option value="google/gemma-2-9b-it">Gemma 2 9B ($0.02/M)</option>
+                <option value="deepseek/deepseek-r1-0528">DeepSeek R1 0528 ($0.55/M)</option>
+                <option value="openai/gpt-4o">GPT-4o ($2.50/M)</option>
+              </optgroup>
+              <optgroup label="⭐ Premium">
+                <option value="anthropic/claude-sonnet-4">Claude Sonnet 4 ($3/M)</option>
+                <option value="anthropic/claude-sonnet-4.5">Claude Sonnet 4.5 ($3/M)</option>
+                <option value="google/gemini-2.0-pro-exp">Gemini 2.0 Pro Exp ($3.50/M)</option>
+                <option value="openai/gpt-4-turbo">GPT-4 Turbo ($10/M)</option>
+                <option value="anthropic/claude-opus-4">Claude Opus 4 ($15/M)</option>
+                <option value="openai/o1">o1 ($3/M)</option>
+                <option value="openai/o1-pro">o1-pro ($15/M)</option>
+                <option value="openai/o3">o3 ($2/M)</option>
+                <option value="openai/o3-mini">o3-mini ($1.10/M)</option>
+                <option value="openai/o3-pro">o3-pro ($20/M)</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="setting-group">
+            <label class="toggle-label">
+              <input type="checkbox" id="webSearchToggle">
+              <span class="toggle-slider"></span>
+              <span class="toggle-text">Enable Web Search (uses current data, +$4/1k searches)</span>
+            </label>
+          </div>
+          <div class="setting-group setting-divider">
+            <label>Profile Export/Import</label>
+            <p class="setting-help">Securely transfer your API keys to another browser</p>
+            <div class="export-import-btns">
+              <button id="exportProfileBtn" class="btn btn-secondary btn-sm">Export Profile</button>
+              <button id="importProfileBtn" class="btn btn-secondary btn-sm">Import Profile</button>
+            </div>
+            <input type="file" id="importFileInput" accept=".json" style="display: none;">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="saveSettings" class="btn btn-primary">
+            Save Settings
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <p id="loadingText">Generating playlist...</p>
+        <div class="loading-steps" id="loadingSteps">
+          <div class="loading-step" data-step="1">
+            <span class="step-icon">🤖</span>
+            <span class="step-text">AI is thinking...</span>
+          </div>
+          <div class="loading-step" data-step="2">
+            <span class="step-icon">🎵</span>
+            <span class="step-text">Searching Spotify catalog...</span>
+          </div>
+          <div class="loading-step" data-step="3">
+            <span class="step-icon">✨</span>
+            <span class="step-text">Building your playlist...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
